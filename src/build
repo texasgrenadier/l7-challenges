@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker image build -t benford-app .
+docker run -p 5001:5000 -d benford-app

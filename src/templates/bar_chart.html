@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <title>{{ title }}</title>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js'></script>
 </head>
+
 
 <body>
   <center>
@@ -17,41 +18,61 @@
       var barData = {
         labels : [
           {% for item in labels %}
-           "{{ item }}",
+            "{{ item }}",
           {% endfor %}
-	],
+	      ],
 
         datasets : [{
           fillColor: "rgba(151,187,205,0.2)",
           strokeColor: "rgba(151,187,205,1)",
           pointColor: "rgba(151,187,205,1)",
+          label: 'Actual Data',
+          backgroundColor: 'rgb(255, 0, 0)',
+          borderColor: 'rgb(255, 0, 0)',
           data : [
             {% for item in values %}
-               "{{ item }}",
-              {% endfor %}
-	    ]
-          }
-        ]
+              "{{ item }}",
+            {% endfor %}
+          ]
+        }, {
+          type: 'line',
+          label: 'Expected Data',
+          // backgroundColor: 'rgb(0, 0, 0)',
+          borderColor: 'rgb(0, 0, 255)',
+          data: [0, 30, 18, 12, 10, 8, 7, 6, 5, 5]
+        }]
       }
 
-     // get bar chart canvas
-     var mychart = document.getElementById("chart").getContext("2d");
+      // get bar chart canvas
+      var context = document.getElementById("chart").getContext("2d");
 
-       steps = 10
-       max = {{max}}
+      steps = 10
+      max = {{max}}
+      chartOptions = {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: max
+                }
+            }]
+        }
+      }
 
-     // draw bar chart
-     new Chart(mychart).Bar(barData, {
-       scaleOverride: true,
-       scaleSteps: steps,
-       scaleStepWidth: Math.ceil(max / steps),
-       scaleStartValue: 0,
-       scaleShowVerticalLines: true,
-       scaleShowGridLines : true,
-       barShowStroke : true,
-       scaleShowLabels: true
-       }
-     );
+      // draw bar chart
+      var mixedChart = new Chart(context, {
+        type: 'bar',
+        data: barData,
+        options: chartOptions
+      });
 
     </script>
   </center>

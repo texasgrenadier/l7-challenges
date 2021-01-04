@@ -33,13 +33,15 @@
             {% for item in values %}
               "{{ item }}",
             {% endfor %}
-          ]
+          ],
+          order: 2
         }, {
           type: 'line',
           label: 'Expected Data',
           // backgroundColor: 'rgb(0, 0, 0)',
           borderColor: 'rgb(0, 0, 255)',
-          data: [0, 30, 18, 12, 10, 8, 7, 6, 5, 5]
+          data: [0, 30, 18, 12, 10, 8, 7, 6, 5, 5],
+          order: 1
         }]
       }
 

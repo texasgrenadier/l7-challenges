@@ -5,9 +5,11 @@ of the leading digit for the specified column.
 
 # To build the application run the following commands:
 
+```
 cd src
 docker image build -t benford-app .
 docker run -p 5001:5000 -d benford-app
+```
 
 # Accessing the application
 
